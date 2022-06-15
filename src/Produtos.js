@@ -33,19 +33,18 @@ const Produtos = ()=>{
 
   async function Load(){
 
-    const snapshot = await query(collection(getFirestore(), 'lojanova'), orderBy('timestamp'), limit(12)).get()
+    const snapshot = query(collection(getFirestore(), 'lojanova'), orderBy('timestamp'), limit(6))
 
-    setTodos(snapshot.docs.map(d=>({id: d.id,item :d.data()})))
+   // setTodos(snapshot.docs.map(d=>({id: d.id,item :d.data()})))
    
- //     var array = []
-    // Start listening to the query.
- //    onSnapshot(recentMessagesQuery, function(snapshot) {
- //     snapshot.docChanges().map(change=> {
- //         array.push({id: change.doc.id, item :change.doc.data()})
- //         setTodos(array)
+      //var array = []
+   //  Start listening to the query.
+     onSnapshot(snapshot, function(snapshot) {
+      setTodos(snapshot.docChanges().map(change=> 
+          ({id: change.doc.id, item :change.doc.data()})
         
- //     })
- //   })
+      ))
+    })
 
     
 

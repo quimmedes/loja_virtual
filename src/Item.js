@@ -9,6 +9,8 @@ return(
           <img
             src={arr.item.imagem}
             className="product-img img"
+            loading="lazy" 
+      
             alt=""
           />
           <div className="product-icons">

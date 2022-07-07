@@ -22,7 +22,7 @@ import {
 const AppContext = createContext()
 
 const AppProvider = ({ children }) => {
-  const [searchTerm, setSearchTerm] = useState('a')
+  const [searchTerm, setSearchTerm] = useState('')
   const [todos, setTodos] = useState([])
   const [cart, setCart] = useState([])
   const [loading, setLoading] = useState(false)

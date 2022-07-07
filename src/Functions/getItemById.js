@@ -1,11 +1,5 @@
 import  {db}  from '../Db';
-
-
-
-import {
-  doc,
-  getDoc,
-} from 'firebase/firestore';
+import { doc, getDoc} from 'firebase/firestore';
 
 const getItemById = async (id)=>{
   

@@ -7,6 +7,8 @@ import Produtos from './Produtos';
 import Produto from './Produto';
 import Sobre from './Sobre'
 import Nav from './Nav'
+import AddUser from './Forms/AddUser';
+import AddProduct from './Forms/AddProduct';
 
 
 
@@ -25,6 +27,10 @@ function App() {
           <Route path="/produtos" element={<Produtos />} />
           <Route path="/produto/:produtoId" element={<Produto />} />
           <Route path="/sobre" element={<Sobre />} />
+          <Route path="/admin/adduser" element={<AddUser />} />
+          <Route path="/admin/addProduct" element={<AddProduct />} />
+
+
     
         </Routes>
     

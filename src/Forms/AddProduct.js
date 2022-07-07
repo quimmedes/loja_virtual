@@ -42,7 +42,17 @@ async function saveMessage(props) {
 }
 
 
+function handleClick(event){
+  console.log(event.currentTarget.dataset.id)
+  event.currentTarget.classList.toggle("active");
+    var content = event.currentTarget.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    }
 
+}
         
 const ProductList = () => {
   return(
@@ -66,8 +76,8 @@ const ProductList = () => {
 
   {todos.map(todo => (
 
-<tr key={todo.id}>
-  <td>{todo.item.name}</td>
+  <tr className="collapsible" onClick={handleClick}  key={todo.id} data-id={todo.id}>
+  <td>{todo.item.name}<input className="update_row"  type="text" /></td>
   <td>{todo.item.image}</td>
   <td>{todo.item.category}</td>
   <td>{todo.item.subcategory}</td>

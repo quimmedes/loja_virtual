@@ -48,9 +48,12 @@ function handleClick(event){
     var content = event.currentTarget.nextElementSibling;
     if (content.style.maxHeight){
       content.style.maxHeight = null;
+      content.style.display = "none";
+
     } else {
       content.style.maxHeight = content.scrollHeight + "px";
-    }
+      content.style.display = "table-row";
+      }
 
 }
 
@@ -62,6 +65,7 @@ const ProductList = () => {
 <table>
   <tbody>
 <tr>
+  <th>+</th>
   <th>Nome</th>
   <th>Imagem</th>
   <th>Categoria</th>
@@ -76,9 +80,10 @@ const ProductList = () => {
 </tr>
 
   {todos.map(todo => (
-
+  <>
   <tr className="collapsible" onClick={handleClick}  key={todo.id} data-id={todo.id}>
-  <td>{todo.item.name}<input className="update_row"  type="text" /></td>
+  <td><button className="btn btn-primary" data-id={todo.id}>+</button></td>
+  <td>{todo.item.name}</td>
   <td>{todo.item.image}</td>
   <td>{todo.item.category}</td>
   <td>{todo.item.subcategory}</td>
@@ -90,6 +95,21 @@ const ProductList = () => {
   <td>{todo.item.quantity}</td>
   <td>{todo.item.content}</td>
   </tr>
+  <tr className="update_row">
+  <td><button className="btn btn-primary" data-id={todo.id}>-</button></td>
+  <td><input name="name" defaultValue={todo.item.name} /></td>
+  <td><input name="name" defaultValue={todo.item.image} /></td>
+  <td><input name="name" defaultValue={todo.item.category} /></td>
+  <td><input name="name" defaultValue={todo.item.subcategory} /></td>
+  <td><input name="name" defaultValue={todo.item.color} /></td>
+  <td><input name="name" defaultValue={todo.item.sku} /></td>
+  <td><input name="name" defaultValue={todo.item.price} /></td>
+  <td><input name="name" defaultValue={todo.item.weight} /></td>
+  <td><input name="name" defaultValue={todo.item.size} /></td>
+  <td><input name="name" defaultValue={todo.item.quantity} /></td>
+  <td><input name="name" defaultValue={todo.item.content} /></td>
+    </tr>
+  </>
   ))}
 </tbody>
 </table>

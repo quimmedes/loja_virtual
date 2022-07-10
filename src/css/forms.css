@@ -77,13 +77,23 @@
   
   .active, .collapsible:hover {
     background-color: #555;
+
   }
   
   .update_row {
-    padding: 0;
-    margin: 0;
+    display: none;
+    padding: 0 18px;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.2s ease-out;
+    transition: display 1s ease-out;
     background-color: #f1f1f1;
   }
+
+    .update_row input{
+        width: 100%;
+        font-size: xx-small;
+        padding: 5px;
+        border-radius: 0px;
+
+       
+    }

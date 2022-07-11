@@ -78,8 +78,8 @@ const ProductList = () => {
   <th>Quantidade</th>
   <th>Descrição</th>
 </tr>
-
-  {todos.map(todo => (
+ 
+   {todos.map(todo => (
   <>
   <tr className="collapsible" onClick={handleClick}  key={todo.id} data-id={todo.id}>
   <td><button className="btn btn-primary" data-id={todo.id}>+</button></td>

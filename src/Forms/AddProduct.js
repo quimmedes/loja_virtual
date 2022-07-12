@@ -1,8 +1,9 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { addDoc, collection, query, orderBy, onSnapshot} from 'firebase/firestore';
+import { addDoc, collection, query, orderBy, onSnapshot, updateDoc, arrayRemove, setDoc, deleteDoc,doc} from 'firebase/firestore';
 import {db} from '../Db';
 import { useEffect, useState, useCallback } from 'react';
 import getItems from '../Functions/getItems';
+import getItemById from '../Functions/getItemById';
 
 const AddProduct = () => {
     const [todos, setTodos] = useState([])
@@ -25,9 +26,12 @@ const AddProduct = () => {
     }, [loading])
 
 
-    
-
-
+ async function getItem(id){
+    const snap = await getItemById(id);
+    return snap;
+  }
+  
+  
 async function saveMessage(props) {
   // Add a new message entry to the Firebase database.
   try {
@@ -41,7 +45,6 @@ async function saveMessage(props) {
   }
 }
 
-
 function handleClick(event){
   console.log(event.currentTarget.dataset.id)
   event.currentTarget.classList.toggle("active");
@@ -54,17 +57,30 @@ function handleClick(event){
       content.style.maxHeight = content.scrollHeight + "px";
       content.style.display = "table-row";
       }
+}
 
+
+async function handleDelete(event){
+  console.log(event.currentTarget.dataset.id)
+
+  try{
+    await deleteDoc(doc(db, "novos", event.currentTarget.dataset.id));
+  }
+  catch(error){
+    console.error(error)
+  }finally{
+      setLoading(true)
+
+  }
 }
 
         
 const ProductList = () => {
   return(
       <div className="product-list">
-
 <table>
   <tbody>
-<tr>
+<tr className="collapsible">
   <th>+</th>
   <th>Nome</th>
   <th>Imagem</th>
@@ -82,7 +98,7 @@ const ProductList = () => {
    {todos.map(todo => (
   <>
   <tr className="collapsible" onClick={handleClick}  key={todo.id} data-id={todo.id}>
-  <td><button className="btn btn-primary" data-id={todo.id}>+</button></td>
+  <td style={{margin:0,padding:0}}><button className="btn" style={{padding:0,margin:0}} data-id={todo.id}>+</button></td>
   <td>{todo.item.name}</td>
   <td>{todo.item.image}</td>
   <td>{todo.item.category}</td>
@@ -96,18 +112,18 @@ const ProductList = () => {
   <td>{todo.item.content}</td>
   </tr>
   <tr className="update_row">
-  <td><button className="btn btn-primary" data-id={todo.id}>-</button></td>
+  <td><button className="btn" style={{color:"red",padding:0,margin:0}} onClick={handleDelete} data-id={todo.id}>X</button></td>
   <td><input name="name" defaultValue={todo.item.name} /></td>
-  <td><input name="name" defaultValue={todo.item.image} /></td>
-  <td><input name="name" defaultValue={todo.item.category} /></td>
-  <td><input name="name" defaultValue={todo.item.subcategory} /></td>
-  <td><input name="name" defaultValue={todo.item.color} /></td>
-  <td><input name="name" defaultValue={todo.item.sku} /></td>
-  <td><input name="name" defaultValue={todo.item.price} /></td>
-  <td><input name="name" defaultValue={todo.item.weight} /></td>
-  <td><input name="name" defaultValue={todo.item.size} /></td>
-  <td><input name="name" defaultValue={todo.item.quantity} /></td>
-  <td><input name="name" defaultValue={todo.item.content} /></td>
+  <td><input name="image" defaultValue={todo.item.image} /></td>
+  <td><input name="category" defaultValue={todo.item.category} /></td>
+  <td><input name="subcategory" defaultValue={todo.item.subcategory} /></td>
+  <td><input name="color" defaultValue={todo.item.color} /></td>
+  <td><input name="sku" defaultValue={todo.item.sku} /></td>
+  <td><input name="price" defaultValue={todo.item.price} /></td>
+  <td><input name="weight" defaultValue={todo.item.weight} /></td>
+  <td><input name="size" defaultValue={todo.item.size} /></td>
+  <td><input name="quantity" defaultValue={todo.item.quantity} /></td>
+  <td><input name="content" defaultValue={todo.item.content} /> </td>
     </tr>
   </>
   ))}
@@ -119,7 +135,7 @@ const ProductList = () => {
 
 
 return(
-    <div className="form">
+    <div className="addProduct">
        <Formik
 
        initialValues={{ name: '', image: '' , content: '', category: 'padrao', subcategory: 'nenhum'}} 
@@ -144,7 +160,6 @@ return(
           <ErrorMessage name="name" component="div" />
           Nome: 
           <Field name="name" />
-
        
           <ErrorMessage name="image" component="div" />
            Imagem:
@@ -158,7 +173,6 @@ return(
            <option value="fiat">Fiat</option>
            <option value="audi">Audi</option>
             </Field>
-
           
             Sub Categoria:
            <Field name="subcategory" as="select" >
@@ -179,7 +193,6 @@ return(
             Quantidade:
             <Field name="quantity" />
               
-
            Descrição: 
           <Field name="content" as="textarea" rows="4" cols="50"/>
       
@@ -189,6 +202,7 @@ return(
          </Form>
        )}
      </Formik>
+
         {todos && <ProductList /> }
         </div>
 )    

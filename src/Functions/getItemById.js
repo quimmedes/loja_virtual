@@ -5,7 +5,7 @@ const getItemById = async (id)=>{
   
         try {
 
-          const docRef = doc(db, "lojanova", id);
+          const docRef = doc(db, "novos", id);
           const docSnap = await getDoc(docRef);
           
           if (docSnap.exists()) {

@@ -3,7 +3,9 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 const AddUser = (props) => {
 
 return(
-    <div className="form">
+    <div className="row">
+      <div className="col-75">
+        <div className="container">
        <Formik
        initialValues={{ email: '', password: '', confirmPassword: '' }}
        validate={values => {
@@ -45,21 +47,31 @@ return(
      >
        {({ isSubmitting }) => (
          <Form>
+          <div className="row">
+            
           <ErrorMessage name="email" component="div" />
-          Email: 
+          <label> Email:</label>
           <Field type="email" name="email" />
+          </div>
+          <div className="row" >
+            <div className="col-50">
           <ErrorMessage name="password" component="div" />
-           Senha:
+           <label>Senha:</label>
            <Field type="password" name="password" />
            <ErrorMessage name="confirmPassword" component="div" />
-           Confirmar Senha:
+           <label>Confirmar Senha:</label>
            <Field type="password" name="confirmPassword" />
+           </div>
            <button type="submit" disabled={isSubmitting}>
              Salvar
            </button>
+
+          </div>
          </Form>
        )}
      </Formik>
+     </div>
+     </div>
         </div>
 )    
 

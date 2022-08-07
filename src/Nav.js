@@ -4,6 +4,8 @@ import './css/styles.css'
 import {  useContext, useEffect, useState } from "react";
 import CartItem from './CartItem';
 import { useGlobalContext } from './Context';
+import LoginButton from './Functions/LoginButton';
+import LogoutButton from './Functions/LogoutButton';
 
 
 const Nav = ()=>{
@@ -97,6 +99,10 @@ const Nav = ()=>{
             </button>
             <span className="cart-item-count">{cart && cart.length}</span>
           </div>
+        </div>
+        <div>
+          <LoginButton />
+          <LogoutButton />
         </div>
       </nav>
 
